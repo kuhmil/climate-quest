@@ -22,7 +22,7 @@ class WeatherData(BaseModel):
     missingData: bool
 
 
-class ClothingRecommendation(BaseModel):
+class PackingRecommendations(BaseModel):
     clothing_items: List[str]
     general_items: List[str]
     travel_type_items: List[str]

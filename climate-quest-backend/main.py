@@ -8,7 +8,7 @@ import os
 from datetime import datetime, timedelta
 import json
 import statistics
-from travel_utils import convert_date, get_clothing_recommendation,adjust_dates
+from travel_utils import get_packing_list,adjust_dates
 from models import ChartRequest, WeatherData
 from choropleth import get_choropleth
 from dotenv import load_dotenv
@@ -43,12 +43,14 @@ async def prepare_quest(request: ChartRequest):
                     "windSpeed": None,
                     "missingData": True
                 },
-                "clothing": None
+                "packing_list": None
             }
 
         chart_data_serializable = get_choropleth(request, data.averageTemperature)
 
-        clothing_recommendation = get_clothing_recommendation(data, request.activity, request.travelType)
+        packing_recommendations = get_packing_list(data, request.activity, request.travelType)
+
+        print(packing_recommendations)
 
         return {
             "chart": chart_data_serializable,
@@ -58,7 +60,7 @@ async def prepare_quest(request: ChartRequest):
                 "windSpeed": data.averageWindSpeed,
                 "missingData": False
             },
-            "clothing": clothing_recommendation  # return the loaded clothing data as part of the response
+            "packing_list": packing_recommendations  # return the loaded clothing data as part of the response
         }
 
     

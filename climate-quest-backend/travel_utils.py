@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 import json
-from models import *
+from models import PackingRecommendations, ChartRequest, WeatherData
 
 def convert_date(date_str):
 
@@ -41,7 +41,7 @@ def get_iso_code(country_name):
     return iso_code
 
 
-def get_clothing_recommendation(data: WeatherData, activity, travelType) -> ClothingRecommendation:
+def get_packing_list(data: WeatherData, activity, travelType) -> PackingRecommendations:
     temperature = data.averageTemperature
     humidity = data.averageHumidity
     windSpeed = data.averageWindSpeed
@@ -86,7 +86,7 @@ def get_clothing_recommendation(data: WeatherData, activity, travelType) -> Clot
     # Get additional items based on travel type
     travel_type_items = next((item["items"] for item in clothing_data["travelTypes"] if item["type"] == travelType), [])
 
-    return ClothingRecommendation(
+    return PackingRecommendations(
         clothing_items=clothing_list,
         general_items=general_items,
         travel_type_items=travel_type_items
