@@ -1,0 +1,18 @@
+version: '3'
+services:
+  backend:
+    build:
+      context: ./climate-quest-backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/usr/src/app
+    ports:
+      - 8000:8000
+  frontend:
+    build:
+      context: ./climate-quest-frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./climate-quest-frontend:/usr/src/app
+    ports:
+      - 3000:3000

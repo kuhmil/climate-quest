@@ -1,0 +1,318 @@
+{
+  "temperature": [
+    {
+      "condition": "cold",
+      "range": [-100.0, 10.0],
+      "clothing": ["Jacket", "Long Pants", "Boots", "Hat", "Gloves"],
+      "colorscale": "Blues"
+    },
+    {
+      "condition": "mild",
+      "range": [10.0, 25.0],
+      "clothing": ["Sweater", "Jeans", "Sneakers", "Scarf"],
+      "colorscale": "Greens"
+    },
+    {
+      "condition": "mild summer day",
+      "range": [25.0, 30.0],
+      "clothing": ["Light T-shirt", "Shorts", "Sandals", "Sunhat"],
+      "colorscale": "Oranges"
+    },
+    {
+      "condition": "hot summer day",
+      "range": [31.0, 35.0],
+      "clothing": ["Tank Top", "Shorts", "Flip-flops", "Sunglasses", "Sunhat"],
+      "colorscale": "Yellows"
+    },
+    {
+      "condition": "hot",
+      "range": [35.0, 100.0],
+      "clothing": ["Light Clothing", "Shorts", "Sandals", "Wide-brimmed Hat", "Sunglasses", "Sunscreen"],
+      "colorscale": "Reds"
+    }
+  ],
+  "humidity": [
+    {
+      "condition": "dry",
+      "range": [
+        0,
+        30
+      ],
+      "clothing": [
+        "Moisturizer"
+      ]
+    },
+    {
+      "condition": "moderate",
+      "range": [
+        30,
+        70
+      ],
+      "clothing": []
+    },
+    {
+      "condition": "humid",
+      "range": [
+        70,
+        100
+      ],
+      "clothing": [
+        "Dehumidifier"
+      ]
+    }
+  ],
+  "windSpeed": [
+    {
+      "condition": "calm",
+      "range": [
+        0,
+        5
+      ],
+      "clothing": []
+    },
+    {
+      "condition": "breezy",
+      "range": [
+        5,
+        10
+      ],
+      "clothing": [
+        "Windbreaker",
+        "Hat"
+      ]
+    },
+    {
+      "condition": "windy",
+      "range": [
+        10,
+        100
+      ],
+      "clothing": [
+        "Heavy Jacket",
+        "Scarf"
+      ]
+    }
+  ],
+  "precipitationIntensity": [
+    {
+      "condition": "none",
+      "range": [
+        0,
+        0
+      ],
+      "clothing": []
+    },
+    {
+      "condition": "light",
+      "range": [
+        0,
+        1
+      ],
+      "clothing": [
+        "Umbrella"
+      ]
+    },
+    {
+      "condition": "heavy",
+      "range": [
+        1,
+        100
+      ],
+      "clothing": [
+        "Raincoat",
+        "Waterproof Boots"
+      ]
+    }
+  ],
+  "generalItems": [
+    {
+      "activity": "camping",
+      "items": [
+        "Tent",
+        "Sleeping Bag",
+        "Flashlight",
+        "Cooking Utensils",
+        "Campfire Starter",
+        "Camp Chairs"
+      ]
+    },
+    {
+      "activity": "beach",
+      "items": [
+        "Beach Towel",
+        "Sunshade",
+        "Beach Ball",
+        "Snorkel",
+        "Sunscreen",
+        "Beach Umbrella"
+      ]
+    },
+    {
+      "activity": "hiking",
+      "items": [
+        "Backpack",
+        "Hiking Shoes",
+        "Map",
+        "Water Bottle",
+        "Compass",
+        "Trail Mix"
+      ]
+    },
+    {
+      "activity": "city exploration",
+      "items": [
+        "Comfortable Shoes",
+        "City Map",
+        "Camera",
+        "Water Bottle",
+        "Guidebook",
+        "Umbrella"
+      ]
+    },
+    {
+      "activity": "road trip",
+      "items": [
+        "Road Atlas",
+        "Snacks",
+        "Car Charger",
+        "Pillow",
+        "Music Playlist",
+        "Emergency Kit"
+      ]
+    },
+    {
+      "activity": "skiing/snowboarding",
+      "items": [
+        "Skis/Snowboard",
+        "Ski/Snowboard Boots",
+        "Goggles",
+        "Helmet",
+        "Base Layers",
+        "Hand/Toe Warmers"
+      ]
+    },
+    {
+      "activity": "cruise",
+      "items": [
+        "Luggage Tags",
+        "Swimsuit",
+        "Evening Wear",
+        "Sun Hat",
+        "Motion Sickness Medication",
+        "Travel Adapter"
+      ]
+    },
+    {
+      "activity": "wildlife safari",
+      "items": [
+        "Binoculars",
+        "Camera with Telephoto Lens",
+        "Sun Hat",
+        "Insect Repellent",
+        "Safari Clothing",
+        "Field Guide"
+      ]
+    }
+  ],
+  "travelTypes": [
+    {
+      "type": "sightseeing",
+      "items": [
+        "Camera",
+        "Comfortable Shoes",
+        "Guidebook",
+        "Water Bottle"
+      ]
+    },
+    {
+      "type": "business",
+      "items": [
+        "Suit",
+        "Tie",
+        "Briefcase",
+        "Laptop"
+      ]
+    },
+    {
+      "type": "adventure",
+      "items": [
+        "Adventure Gear",
+        "Helmet",
+        "GoPro",
+        "First Aid Kit"
+      ]
+    },
+    {
+      "type": "leisure",
+      "items": [
+        "Swimsuit",
+        "Beach Hat",
+        "Sunglasses",
+        "Travel Guide"
+      ]
+    },
+    {
+      "type": "cultural",
+      "items": [
+        "Phrasebook",
+        "Camera",
+        "Comfortable Walking Shoes",
+        "Respectful Clothing"
+      ]
+    },
+    {
+      "type": "eco-tourism",
+      "items": [
+        "Reusable Water Bottle",
+        "Binoculars",
+        "Insect Repellent",
+        "Environmentally-friendly Toiletries"
+      ]
+    },
+    {
+      "type": "backpacking",
+      "items": [
+        "Backpack",
+        "Travel Adapter",
+        "Money Belt",
+        "Quick-drying Towel"
+      ]
+    },
+    {
+      "type": "educational",
+      "items": [
+        "Notebook",
+        "Pen",
+        "Reading Material",
+        "Comfortable Shoes"
+      ]
+    },
+    {
+      "type": "volunteer",
+      "items": [
+        "Volunteer Project Supplies",
+        "Work Gloves",
+        "Community Engagement Materials",
+        "Open Mindset"
+      ]
+    },
+    {
+      "type": "medical",
+      "items": [
+        "Medical Documents",
+        "Prescriptions",
+        "First Aid Kit",
+        "Travel Insurance"
+      ]
+    },
+    {
+      "type": "solo",
+      "items": [
+        "Safety Whistle",
+        "Self-defense Device",
+        "Local Maps",
+        "Self-confidence"
+      ]
+    }
+  ]
+}

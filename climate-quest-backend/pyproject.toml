@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "climate-quest-backend"
+version = "0.1.0"
+description = ""
+authors = ["kuhmil <kuhmil06@gmail.com>"]
+readme = "README.md"
+packages = [{include = "climate_quest_backend"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+fastapi = "^0.100.1"
+uvicorn = "^0.23.1"
+plotly = "^5.15.0"
+requests = "^2.31.0"
+python-dotenv = "^1.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
