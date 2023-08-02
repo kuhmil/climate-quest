@@ -62,12 +62,14 @@ def get_choropleth(request: ChartRequest, temperature: float):
                 showcountries=True,
                 countrycolor='rgb(255, 255, 255)',
                 projection_type='orthographic',
-                bgcolor='rgb(234, 221, 202)'  # Set the background color for the map
+                bgcolor='rgba(0, 0, 0, 0)'  # Set the background color for the map
             ),
             width=800,
             height=600,
-            plot_bgcolor='rgb(234, 221, 202)',
-            paper_bgcolor='rgb(234, 221, 202)'
+            #   background: linear-gradient(to bottom, #007ced 1%, #cce7ff 100%);
+
+            plot_bgcolor='rgba(0, 0, 0, 0)',
+            paper_bgcolor='rgba(0, 0, 0, 0)'
         )
 
         chart_data = {

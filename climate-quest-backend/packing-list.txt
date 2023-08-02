@@ -1,0 +1,170 @@
+Essentials
+
+Valid Passport/ID
+Visa or other necessary travel documents
+Travel insurance documents
+Credit/Debit cards
+Cash in the local currency
+Boarding passes/tickets (if flying)
+Hotel reservation confirmations
+Car rental information (if applicable)
+Itinerary
+Emergency contact information
+Prescriptions/medications
+Vaccination proof or health certificates if required
+Maps or guidebooks (digital or physical)
+Clothing
+
+Underwear
+Socks
+T-shirts
+Pants/jeans
+Dresses/skirts (if applicable)
+Sweaters or jackets
+Sleepwear
+Swimsuit (if necessary)
+Comfortable walking shoes
+Sandals/flip flops
+Formal outfit (if necessary)
+Hat/cap
+Scarves/gloves (if traveling to a cold place)
+Raincoat or umbrella
+Toiletries
+
+Toothbrush and toothpaste
+Soap or body wash
+Shampoo and conditioner
+Razor and shaving cream
+Deodorant
+Makeup and makeup remover (if applicable)
+Hairbrush or comb
+Nail clippers
+Travel-sized toiletry containers
+Toilet paper/tissues
+Towel (if not provided)
+Sunscreen
+Electronics
+
+Smartphone and charger
+Laptop/tablet and charger (if necessary)
+Power bank
+Universal power adapter (for international travel)
+Earphones/headphones
+Camera, memory cards, batteries, and charger
+E-reader (if applicable)
+Travel alarm clock
+Portable Wi-Fi or SIM card (for international travel)
+Health and Safety
+
+First aid kit
+Prescribed medications
+Over-the-counter medicines (for pain, allergies, cold, etc.)
+Sanitizing wipes/hand sanitizers
+Reusable water bottle
+Snacks for the journey
+Mosquito repellent
+Travel pillow and blanket
+Face masks
+Travel-sized detergent (if planning to do laundry)
+Entertainment
+
+Books or e-books
+Travel games
+Playing cards
+Music or podcasts downloaded
+Journal and pen
+Miscellaneous
+
+Travel bags (suitcase, backpack, carry-on, etc.)
+Luggage tags
+Travel locks
+Daypack for daily excursions
+Ziplock bags for organizing
+Travel laundry bag
+Travel sewing kit
+Multi-tool (check if allowed in carry-on luggage)
+Duct tape (for quick fixes)
+Travel pillow
+
+
+
+{
+    "travel": {
+        "essentials": [
+            {
+                "item": "Valid Passport/ID",
+                "quantity": 1
+            },
+            {
+                "item": "Visa or other necessary travel documents",
+                "quantity": 1
+            },
+            {
+                "item": "Travel insurance documents",
+                "quantity": 1
+            },
+            {
+                "item": "Credit/Debit cards",
+                "quantity": 2
+            },
+            {
+                "item": "Cash in local currency",
+                "quantity": 1
+            }
+        ],
+        "clothing": [
+            {
+                "item": "T-shirts",
+                "quantity": 5
+            },
+            {
+                "item": "Pants/jeans",
+                "quantity": 3
+            },
+            {
+                "item": "Sweaters or jackets",
+                "quantity": 1
+            },
+            {
+                "item": "Comfortable walking shoes",
+                "quantity": 1
+            },
+            {
+                "item": "Sandals/flip flops",
+                "quantity": 1
+            }
+        ],
+        "toiletries": [
+            {
+                "item": "Toothbrush and toothpaste",
+                "quantity": 1
+            },
+            {
+                "item": "Soap or body wash",
+                "quantity": 1
+            },
+            {
+                "item": "Shampoo and conditioner",
+                "quantity": 1
+            },
+            {
+                "item": "Deodorant",
+                "quantity": 1
+            }
+        ],
+        "electronics": [
+            {
+                "item": "Smartphone and charger",
+                "quantity": 1
+            },
+            {
+                "item": "Laptop/tablet and charger",
+                "quantity": 1
+            },
+            {
+                "item": "Power bank",
+                "quantity": 1
+            }
+        ]
+    }
+}

@@ -60,10 +60,12 @@ async def prepare_quest(request: ChartRequest):
                 "windSpeed": data.averageWindSpeed,
                 "missingData": False
             },
-            "packing_list": packing_recommendations  # return the loaded clothing data as part of the response
+            "packing_list": {
+                  "clothes": packing_recommendations.clothing_items,
+                  "general_items": packing_recommendations.general_items
+                  }
         }
 
-    
 
 def get_weather_data(request: ChartRequest) -> WeatherData:
 
@@ -72,14 +74,17 @@ def get_weather_data(request: ChartRequest) -> WeatherData:
     location = f"{request.latitude},{request.longitude}"
     startDate, endDate = adjust_dates(request)
 
+    
     payload = {
         "location": location,
-        "fields": ["temperature", "humidity", "windSpeed", "precipitationIntensity"],
+        "fields": ["temperature", "humidity", "windSpeed", "totalPrecipitationAccumulation"],
         "timesteps": ["1h"],
         "startTime": startDate,
         "endTime": endDate,
         "units": request.unit
     }
+
+    print(payload)
 
 
     headers = {
