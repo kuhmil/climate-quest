@@ -18,12 +18,12 @@ import backpack from "./icons/Backpack.png";
 import electric from "./icons/Electric.png";
 import shirt from "./icons/Shirt.png";
 import toiletries from "./icons/Toiletries.png";
-// import DatePicker from "react-datepicker";
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-// import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
-// import CelsiusIcon from "./icons/CelsiusIcon.png"; // adjust the path as necessary
-// import FahrenheitIcon from "./icons/FahrenheitIcon.png"; // adjust the path as necessary
-// import Switch from "@material-ui/core/Switch";
+import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
+import CelsiusIcon from "./icons/CelsiusIcon.png"; // adjust the path as necessary
+import FahrenheitIcon from "./icons/FahrenheitIcon.png"; // adjust the path as necessary
+import Switch from "@material-ui/core/Switch";
 
 function App() {
   const [message, setMessage] = useState(null);
@@ -147,55 +147,56 @@ function App() {
   };
 
   return (
-      <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center">
-        <div className="toggle-radio" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginRight: '10px' }}>
-          <img src={backpack} style={{ width: 50, height: 50 }} />
-          <div style={{ marginTop: 10 }}>
-            <input type="radio" name="rdo" id="minus1" defaultChecked />
-            <input type="radio" name="rdo" id="plus1" />
-            <div className="switch">
-              <label htmlFor="minus1">-</label>
-              <label htmlFor="plus1">+</label>
-            </div>
-          </div>
-        </div>
+<Box display="flex" flexDirection="row" justifyContent="center" alignItems="center">
+  <div className="toggle-radio" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginRight: '10px' }}>
+    <img src={backpack} alt="backpack" style={{ width: 50, height: 50 }} />
+    <div style={{ marginTop: 10 }}>
+      <input type="radio" name="rdo1" id="minus1" defaultChecked />
+      <input type="radio" name="rdo1" id="plus1" />
+      <div className="switch">
+        <label htmlFor="minus1">-</label>
+        <label htmlFor="plus1">+</label>
+      </div>
+    </div>
+  </div>
 
-        <div className="toggle-radio" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginLeft: '10px' }}>
-          <img src={toiletries} style={{ width: 50, height: 50 }} />
-          <div style={{ marginTop: 10 }}>
-            <input type="radio" name="rdo" id="minus2" defaultChecked />
-            <input type="radio" name="rdo" id="plus2" />
-            <div className="switch">
-              <label htmlFor="minus2">-</label>
-              <label htmlFor="plus2">+</label>
-            </div>
-          </div>
-        </div>
+  <div className="toggle-radio" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginLeft: '10px' }}>
+    <img src={toiletries} alt="toiletries" style={{ width: 50, height: 50 }} />
+    <div style={{ marginTop: 10 }}>
+      <input type="radio" name="rdo2" id="minus2" defaultChecked />
+      <input type="radio" name="rdo2" id="plus2" />
+      <div className="switch">
+        <label htmlFor="minus2">-</label>
+        <label htmlFor="plus2">+</label>
+      </div>
+    </div>
+  </div>
 
-        <div className="toggle-radio" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginLeft: '10px' }}>
-          <img src={shirt}  style={{ width: 50, height: 50 }} />
-          <div style={{ marginTop: 10 }}>
-            <input type="radio" name="rdo" id="minus2" defaultChecked />
-            <input type="radio" name="rdo" id="plus2" />
-            <div className="switch">
-              <label htmlFor="minus2">-</label>
-              <label htmlFor="plus2">+</label>
-            </div>
-          </div>
-        </div>
+  <div className="toggle-radio" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginLeft: '10px' }}>
+    <img src={shirt} alt="shirt" style={{ width: 50, height: 50 }} />
+    <div style={{ marginTop: 10 }}>
+      <input type="radio" name="rdo3" id="minus3" defaultChecked />
+      <input type="radio" name="rdo3" id="plus3" />
+      <div className="switch">
+        <label htmlFor="minus3">-</label>
+        <label htmlFor="plus3">+</label>
+      </div>
+    </div>
+  </div>
 
-        <div className="toggle-radio" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginLeft: '10px' }}>
-          <img src={electric} style={{ width: 50, height: 50 }} />
-          <div style={{ marginTop: 10 }}>
-            <input type="radio" name="rdo" id="minus2" defaultChecked />
-            <input type="radio" name="rdo" id="plus2" />
-            <div className="switch">
-              <label htmlFor="minus2">-</label>
-              <label htmlFor="plus2">+</label>
-            </div>
-          </div>
-        </div>
-      </Box>
+  <div className="toggle-radio" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginLeft: '10px' }}>
+    <img src={electric} alt="electric" style={{ width: 50, height: 50 }} />
+    <div style={{ marginTop: 10 }}>
+      <input type="radio" name="rdo4" id="minus4" defaultChecked />
+      <input type="radio" name="rdo4" id="plus4" />
+      <div className="switch">
+        <label htmlFor="minus4">-</label>
+        <label htmlFor="plus4">+</label>
+      </div>
+    </div>
+  </div>
+</Box>
+
   );
 }
 

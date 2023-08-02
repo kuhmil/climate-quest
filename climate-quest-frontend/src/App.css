@@ -301,7 +301,7 @@ input[type=radio] {
   text-align: center;
 }
 
-#plus:checked ~ .switch label[for=plus] {
+/* #plus:checked ~ .switch label[for=plus] {
   background: #4CAF50;
   color: #fff;
 }
@@ -312,4 +312,20 @@ input[type=radio] {
 
 #plus:checked ~ .switch span {
   margin-left: -8px;
+} */
+
+#plus1:checked ~ .switch label[for=plus1],
+#plus2:checked ~ .switch label[for=plus2],
+#plus3:checked ~ .switch label[for=plus3],
+#plus4:checked ~ .switch label[for=plus4] {
+  background: #4CAF50;
+  color: #fff;
+}
+
+#minus1:checked ~ .switch label[for=minus1],
+#minus2:checked ~ .switch label[for=minus2],
+#minus3:checked ~ .switch label[for=minus3],
+#minus4:checked ~ .switch label[for=minus4] {
+  background: #E91E63;
+  color: #fff;
 }
