@@ -3,18 +3,27 @@ body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background-color: #2EB5E5;
+  /* background-color: #2EB5E5; */
   /* background-color: #007ced;*/
-  /* background: linear-gradient(to bottom, #007ced 1%,#cce7ff 100%); */
+  /* background: linear-gradient(260deg, #007ced 50%,#cce7ff 100%); */
   /* background: linear-gradient(to bottom, #007ced 30%,#EADDCA 100%); */
   /* background: #007ced; */
   background: linear-gradient(30deg, #EADDCA 84%, #2EB5E5 25%);
+  overflow-x: hidden;
+  overflow-y: hidden;
+
+
+
 
   background-attachment: fixed;
   background-size: cover;
   font-family: Arial, sans-serif;
   color: #ffffff; 
 }
+
+
+
+
 
 .airplane {
   margin: 0;
@@ -265,7 +274,7 @@ body {
   }
 
 }
-
+/* 
 .switch {
   width: 80px;
   height: 40px;
@@ -314,7 +323,7 @@ input[type=radio] {
   margin-left: -8px;
 } */
 
-#plus1:checked ~ .switch label[for=plus1],
+/* #plus1:checked ~ .switch label[for=plus1],
 #plus2:checked ~ .switch label[for=plus2],
 #plus3:checked ~ .switch label[for=plus3],
 #plus4:checked ~ .switch label[for=plus4] {
@@ -329,3 +338,48 @@ input[type=radio] {
   background: #E91E63;
   color: #fff;
 }
+
+.parallelogram {
+	width: 50%;
+	height: 100px;
+	transform: skew(-20deg);
+	background: #555;
+} */
+
+.toggle-radio .switch {
+  display: flex;
+}
+
+.toggle-radio input[type="radio"] {
+  display: none;
+}
+
+.toggle-radio .switch label {
+  width: 30px;
+  height: 34px;
+  line-height: 34px;
+  text-align: center;
+  background-color: #ccc;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.toggle-radio input[type="radio"]:checked + label {
+  background-color: #4caf50; /* green color when selected */
+}
+
+.toggle-radio #minus1:checked + label {
+  background-color: red; /* red color when selected */
+}
+
+/* .switch label {
+  cursor: pointer;
+}
+
+.switch input[type="radio"]:checked + label {
+  color: green;
+}
+
+.switch input[type="radio"]:not(:checked) + label {
+  color: red;
+} */

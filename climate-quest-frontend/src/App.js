@@ -13,12 +13,19 @@ import {
 import Plot from "react-plotly.js";
 import continentsCountries from "./locations.json";
 import "./App.css";
+
 import paperAirplane from "./paper-airplane.png";
+import backpack from "./icons/Backpack.png";
+import electric from "./icons/Electric.png";
+import shirt from "./icons/Shirt.png";
+import toiletries from "./icons/Toiletries.png";
+
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
 import CelsiusIcon from "./icons/CelsiusIcon.png"; // adjust the path as necessary
 import FahrenheitIcon from "./icons/FahrenheitIcon.png"; // adjust the path as necessary
+import Switch from "@material-ui/core/Switch";
 
 function App() {
   const [message, setMessage] = useState(null);
@@ -33,7 +40,6 @@ function App() {
   const [humidity, setHumidity] = useState(null);
   const [windSpeed, setWindSpeed] = useState(null);
   const [precipitationIntensity, setPrecipitationIntensity] = useState(null);
-  const [packingList, setPackingList] = useState(null);
   const [activity, setActivity] = useState("");
   const [travelType, setTravelType] = useState("");
   const [selectedClothes, setSelectedClothes] = useState({});
@@ -42,6 +48,15 @@ function App() {
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [unit, setUnit] = useState("metric");
   const [missingData, setMissingData] = useState(false); // Add missingData state variable
+
+  const [selectedItems, setSelectedItems] = useState({});
+  const [showSwitch, setShowSwitch] = useState(false);
+
+  const [packingList, setPackingList] = useState(null);
+  const [anotherList, setAnotherList] = useState(null);
+
+  const [isPackingListVisible, setIsPackingListVisible] = useState(false);
+  const [isAnotherListVisible, setIsAnotherListVisible] = useState(false);
 
   <img src={paperAirplane} alt="Paper Airplane" className="paper-airplane" />;
 
@@ -99,6 +114,16 @@ function App() {
     checklist.classList.toggle("show-card");
   };
 
+  
+
+  const handleTogglePackingList = () => {
+    setIsPackingListVisible(!isPackingListVisible);
+  };
+
+  const handleToggleAnotherList = () => {
+    setIsAnotherListVisible(!isAnotherListVisible);
+  };
+
   const handleClick = async () => {
     try {
       const response = await axios.post("http://localhost:8000/quest", {
@@ -129,21 +154,89 @@ function App() {
         // setPrecipitationIntensity(response.data.weather.precipitationIntensity);
 
         // Update the clothing data from the backend response
-        setPackingList(response.data.packing_list); // Replace 'clothing' with 'packing_list'
-
+        setPackingList(response.data.packing_list.clothes);
+        setAnotherList(response.data.packing_list.general_items);
 
         // Check for missing data
         setMissingData(response.data.weather.missingData);
 
         setCalendarOpen(false);
+        setShowSwitch(true);
       }
     } catch (error) {
       console.error(error);
     }
   };
 
+  const renderList = (list, selectedItems, setSelectedItems) => (
+    <Box mt={10} display="flex" flexDirection="column" alignItems="start">
+      <h2>Packing Recommendations</h2>
+      <Box
+        display="flex"
+        flexDirection="row"
+        justifyContent="center"
+        alignItems="center"
+      ></Box>
+      {Object.entries(list).map(([key, value], i) => (
+        <FormControlLabel
+          key={i}
+          control={
+            <Checkbox
+              checked={selectedItems[key] || false}
+              onChange={(e) =>
+                setSelectedItems({
+                  ...selectedItems,
+                  [key]: e.target.checked,
+                })
+              }
+              name={key}
+              color="primary"
+            />
+          }
+          label={`${key}: ${value}`}
+        />
+      ))}
+    </Box>
+  );
+
   return (
-    <Box m={2} textAlign="center">
+
+
+
+
+    <Box m={10} textAlign="center">
+          <div className="rectangle"></div>
+
+
+
+<FormControl style={{ marginTop: "0px"}}>
+          <FormLabel>Select date range:</FormLabel>
+          <Box mt={3} display="flex" flexDirection="column" alignItems="fixed">
+            <Button
+              onClick={() => setCalendarOpen(!calendarOpen)}
+              style={{
+                padding: "0 20px",
+                marginTop: "-2px",
+                marginBottom: "10px",
+              }}
+            >
+              Select Dates
+            </Button>
+            {calendarOpen && (
+              <DatePicker
+                selected={startDate}
+                onChange={(update) => {
+                  setStartDate(update[0]);
+                  setEndDate(update[1]);
+                }}
+                startDate={startDate}
+                endDate={endDate}
+                selectsRange
+                inline
+              />
+            )}
+          </Box>
+        </FormControl>
       <FormControl style={{ padding: "0", marginLeft: "20px" }}>
         <FormLabel>Select a continent:</FormLabel>
         <Select value={continent} onChange={handleContinentChange}>
@@ -211,15 +304,16 @@ function App() {
         </Select>
       </FormControl>
 
-      <Box
-        mt={-10}
-        display="flex"
-        justifyContent="flex-end"
-        alignItems="flex-start"
-        mr={5}
-      >
+      <Box display="flex" position="fixed" right={150} top={95}>
+        <div class="center" style={{ position: "relative" }}>
+          <div
+            id="cloud"
+            style={{ position: "absolute", top: "20px", right: "-210px" }}
+          ></div>
+        </div>
         <FormControl className="temperature-control">
           <FormLabel>Unit of Temperature:</FormLabel>
+
           <Box className="center-box">
             <ToggleButtonGroup
               value={unit}
@@ -254,20 +348,38 @@ function App() {
         </FormControl>
       </Box>
 
-      <img
-        src={paperAirplane}
-        alt="Paper Airplane"
-        style={{
-          position: "absolute",
-          top: 40,
-          right: 200,
-          width: "30%",
-          height: "20%",
-          transform: "rotate(6deg)",
-        }}
-      />
+      {/* <Box position="absolute" top="16px" left="400px">
+        <FormControl style={{ marginTop: "0px" }}>
+          <FormLabel>Select date range:</FormLabel>
+          <Box mt={3} display="flex" flexDirection="column" alignItems="left">
+            <Button
+              onClick={() => setCalendarOpen(!calendarOpen)}
+              style={{
+                padding: "0 20px",
+                marginTop: "-2px",
+                marginBottom: "10px",
+              }}
+            >
+              Select Dates
+            </Button>
+            {calendarOpen && (
+              <DatePicker
+                selected={startDate}
+                onChange={(update) => {
+                  setStartDate(update[0]);
+                  setEndDate(update[1]);
+                }}
+                startDate={startDate}
+                endDate={endDate}
+                selectsRange
+                inline
+              />
+            )}
+          </Box>
+        </FormControl>
+      </Box> */}
 
-      <Box mt={5} display="flex" justifyContent="center" alignItems="center">
+      <Box mt={8} display="flex" justifyContent="center" alignItems="center">
         <Button
           variant="contained"
           className="button button-space"
@@ -324,72 +436,143 @@ function App() {
             </Box>
           )}
         </Box>
-        <Box flex={1} display="flex" flexDirection="column" alignItems="start" ml={20}>
-          {/* Packing list data */}
-          {packingList && (
-            <Box mt={2} display="flex" flexDirection="column" alignItems="start">
-              <h2>Packing Recommendations</h2>
-              {Object.entries(packingList).map(([key, value], i) => (
-                <FormControlLabel 
-                  key={i}
-                  control={
-                    <Checkbox 
-                      checked={selectedClothes[key] || false}
-                      onChange={(e) => setSelectedClothes({...selectedClothes, [key]: e.target.checked})}
-                      name={key}
-                      color="primary"
-                    />
-                  }
-                  label={`${key}: ${value}`}
-                />
-              ))}
-            </Box>
-          )}
-   
-          <Box position="absolute" top="16px" left="400px">
-            <FormControl style={{ marginTop: "0px" }}>
-              {/* ... (Previous code remains the same) */}
-            </FormControl>
-          </Box>
-        </Box>
-      </Box>
-          <Box position="absolute" top="16px" left="400px">
-            <FormControl style={{ marginTop: "0px" }}>
-              <FormLabel>Select date range:</FormLabel>
-              <Box
-                mt={3}
-                display="flex"
-                flexDirection="column"
-                alignItems="left"
-              >
-                <Button
-                  onClick={() => setCalendarOpen(!calendarOpen)}
+
+        {chart && (
+          <Box
+            flex={1}
+            display="flex"
+            flexDirection="row"
+            alignItems="start"
+            ml={20}
+          >
+            <Box>
+              <h2>Conditions in {city}</h2>
+              <Box display="flex" flexDirection="row">
+                <div
+                  className="toggle-radio"
                   style={{
-                    padding: "0 20px",
-                    marginTop: "-2px",
-                    marginBottom: "10px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    marginRight: "10px",
                   }}
                 >
-                  Select Dates
-                </Button>
-                {calendarOpen && (
-                  <DatePicker
-                    selected={startDate}
-                    onChange={(update) => {
-                      setStartDate(update[0]);
-                      setEndDate(update[1]);
-                    }}
-                    startDate={startDate}
-                    endDate={endDate}
-                    selectsRange
-                    inline
+                  <img
+                    src={backpack}
+                    alt="backpack"
+                    style={{ width: 50, height: 50 }}
                   />
-                )}
+                  <div style={{ marginTop: 10 }}>
+                    <div className="switch">
+                      <input
+                        type="radio"
+                        name="rdo2"
+                        id="minus1"
+                        checked={!isAnotherListVisible}
+                      />
+                      <label
+                        htmlFor="minus1"
+                        onClick={() => handleToggleAnotherList(false)}
+                      >
+                        -
+                      </label>
+                      <input
+                        type="radio"
+                        name="rdo2"
+                        id="plus2"
+                        checked={isAnotherListVisible}
+                      />
+                      <label
+                        htmlFor="plus2"
+                        onClick={() => handleToggleAnotherList(true)}
+                      >
+                        +
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="toggle-radio"
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    marginRight: "10px",
+                  }}
+                >
+                  <img
+                    src={backpack}
+                    alt="backpack"
+                    style={{ width: 50, height: 50 }}
+                  />
+                  <div style={{ marginTop: 10 }}>
+                    <div className="switch">
+                      <input
+                        type="radio"
+                        name="rdo1"
+                        id="minus1"
+                        checked={!isPackingListVisible}
+                      />
+                      <label
+                        htmlFor="minus1"
+                        onClick={() => handleTogglePackingList(false)}
+                      >
+                        -
+                      </label>
+                      <input
+                        type="radio"
+                        name="rdo1"
+                        id="plus1"
+                        checked={isPackingListVisible}
+                      />
+                      <label
+                        htmlFor="plus1"
+                        onClick={() => handleTogglePackingList(true)}
+                      >
+                        +
+                      </label>
+                    </div>
+                  </div>
+                </div>
               </Box>
-            </FormControl>
+              {isPackingListVisible &&
+                packingList &&
+                renderList(packingList, selectedItems, setSelectedItems)}
+              {isAnotherListVisible &&
+                anotherList &&
+                renderList(anotherList, selectedItems, setSelectedItems)}
+            </Box>
           </Box>
-        </Box>
-      // </Box>
+        )}
+      </Box>
+
+      <Box className="center-box">
+        <img
+          src={paperAirplane}
+          alt="Paper Airplane"
+          style={{
+            position: "absolute",
+            top: 100,
+            left: -100,
+            width: "25%",
+            height: "20%",
+            transform: "rotate(80deg)",
+          }}
+        />
+        <img
+          src={paperAirplane}
+          alt="Paper Airplane"
+          style={{
+            position: "absolute",
+            bottom: 100,
+            right: -100,
+            width: "25%",
+            height: "20%",
+            transform: "rotate(250deg)",
+          }}
+        />
+      </Box>
+    </Box>
   );
 }
 
