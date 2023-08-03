@@ -10,7 +10,7 @@ body {
   /* background: #007ced; */
   background: linear-gradient(30deg, #EADDCA 84%, #2EB5E5 25%);
   overflow-x: hidden;
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
 
 
 
@@ -18,7 +18,7 @@ body {
   background-attachment: fixed;
   background-size: cover;
   font-family: Arial, sans-serif;
-  color: #ffffff; 
+  /* color: #ffffff;  */
 }
 
 

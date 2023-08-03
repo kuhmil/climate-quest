@@ -16,7 +16,7 @@ import "./App.css";
 
 import paperAirplane from "./paper-airplane.png";
 import backpack from "./icons/Backpack.png";
-import electric from "./icons/Electric.png";
+import electronics from "./icons/Electric.png";
 import shirt from "./icons/Shirt.png";
 import toiletries from "./icons/Toiletries.png";
 
@@ -42,7 +42,7 @@ function App() {
   const [precipitationIntensity, setPrecipitationIntensity] = useState(null);
   const [activity, setActivity] = useState("");
   const [travelType, setTravelType] = useState("");
-  const [selectedClothes, setSelectedClothes] = useState({});
+
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [calendarOpen, setCalendarOpen] = useState(false);
@@ -50,13 +50,17 @@ function App() {
   const [missingData, setMissingData] = useState(false); // Add missingData state variable
 
   const [selectedItems, setSelectedItems] = useState({});
-  const [showSwitch, setShowSwitch] = useState(false);
 
   const [packingList, setPackingList] = useState(null);
-  const [anotherList, setAnotherList] = useState(null);
+  const [clothesList, setClothesList] = useState(null);
+  const [toiletriesList, setToiletriesList] = useState(null);
+  const [electronicsList, setElectronicsList] = useState(null);
 
+  const [isClothesListVisible, setIsClothesListVisible] = useState(false);
+  const [isElectronicsListVisible, setIsElectronicsListVisible] =
+    useState(false);
   const [isPackingListVisible, setIsPackingListVisible] = useState(false);
-  const [isAnotherListVisible, setIsAnotherListVisible] = useState(false);
+  const [isToiletriesListVisible, setIsToiletriesListVisible] = useState(false);
 
   <img src={paperAirplane} alt="Paper Airplane" className="paper-airplane" />;
 
@@ -114,16 +118,21 @@ function App() {
     checklist.classList.toggle("show-card");
   };
 
-  
-
   const handleTogglePackingList = () => {
     setIsPackingListVisible(!isPackingListVisible);
   };
 
-  const handleToggleAnotherList = () => {
-    setIsAnotherListVisible(!isAnotherListVisible);
+  const handleToggleClothesList = () => {
+    setIsClothesListVisible(!isClothesListVisible);
   };
 
+  const handleToggleElectronicsList = () => {
+    setIsElectronicsListVisible(!isElectronicsListVisible);
+  };
+
+  const handleToggleToiletriesList = (isVisible) => {
+    setIsToiletriesListVisible(!isToiletriesListVisible);
+  };
   const handleClick = async () => {
     try {
       const response = await axios.post("http://localhost:8000/quest", {
@@ -155,22 +164,24 @@ function App() {
 
         // Update the clothing data from the backend response
         setPackingList(response.data.packing_list.clothes);
-        setAnotherList(response.data.packing_list.general_items);
+        setClothesList(response.data.packing_list.general_items);
+        setToiletriesList(response.data.packing_list.general_items);
+        setElectronicsList(response.data.packing_list.general_items);
 
         // Check for missing data
         setMissingData(response.data.weather.missingData);
 
         setCalendarOpen(false);
-        setShowSwitch(true);
+        // setShowSwitch(true);
       }
     } catch (error) {
       console.error(error);
     }
   };
 
-  const renderList = (list, selectedItems, setSelectedItems) => (
-    <Box mt={10} display="flex" flexDirection="column" alignItems="start">
-      <h2>Packing Recommendations</h2>
+  const renderList = (list, selectedItems, setSelectedItems, title) => (
+    <Box display="flex" flexDirection="column" alignItems="start">
+      <h4>{title}</h4>
       <Box
         display="flex"
         flexDirection="row"
@@ -200,43 +211,37 @@ function App() {
   );
 
   return (
+    <Box m={5} textAlign="center">
+      <div className="rectangle"></div>
 
-
-
-
-    <Box m={10} textAlign="center">
-          <div className="rectangle"></div>
-
-
-
-<FormControl style={{ marginTop: "0px"}}>
-          <FormLabel>Select date range:</FormLabel>
-          <Box mt={3} display="flex" flexDirection="column" alignItems="fixed">
-            <Button
-              onClick={() => setCalendarOpen(!calendarOpen)}
-              style={{
-                padding: "0 20px",
-                marginTop: "-2px",
-                marginBottom: "10px",
+      <FormControl style={{ marginTop: "0px" }}>
+        <FormLabel>Select date range:</FormLabel>
+        <Box mt={3} display="flex" flexDirection="column" alignItems="fixed">
+          <Button
+            onClick={() => setCalendarOpen(!calendarOpen)}
+            style={{
+              padding: "0 20px",
+              marginTop: "-2px",
+              marginBottom: "10px",
+            }}
+          >
+            Select Dates
+          </Button>
+          {calendarOpen && (
+            <DatePicker
+              selected={startDate}
+              onChange={(update) => {
+                setStartDate(update[0]);
+                setEndDate(update[1]);
               }}
-            >
-              Select Dates
-            </Button>
-            {calendarOpen && (
-              <DatePicker
-                selected={startDate}
-                onChange={(update) => {
-                  setStartDate(update[0]);
-                  setEndDate(update[1]);
-                }}
-                startDate={startDate}
-                endDate={endDate}
-                selectsRange
-                inline
-              />
-            )}
-          </Box>
-        </FormControl>
+              startDate={startDate}
+              endDate={endDate}
+              selectsRange
+              inline
+            />
+          )}
+        </Box>
+      </FormControl>
       <FormControl style={{ padding: "0", marginLeft: "20px" }}>
         <FormLabel>Select a continent:</FormLabel>
         <Select value={continent} onChange={handleContinentChange}>
@@ -348,37 +353,6 @@ function App() {
         </FormControl>
       </Box>
 
-      {/* <Box position="absolute" top="16px" left="400px">
-        <FormControl style={{ marginTop: "0px" }}>
-          <FormLabel>Select date range:</FormLabel>
-          <Box mt={3} display="flex" flexDirection="column" alignItems="left">
-            <Button
-              onClick={() => setCalendarOpen(!calendarOpen)}
-              style={{
-                padding: "0 20px",
-                marginTop: "-2px",
-                marginBottom: "10px",
-              }}
-            >
-              Select Dates
-            </Button>
-            {calendarOpen && (
-              <DatePicker
-                selected={startDate}
-                onChange={(update) => {
-                  setStartDate(update[0]);
-                  setEndDate(update[1]);
-                }}
-                startDate={startDate}
-                endDate={endDate}
-                selectsRange
-                inline
-              />
-            )}
-          </Box>
-        </FormControl>
-      </Box> */}
-
       <Box mt={8} display="flex" justifyContent="center" alignItems="center">
         <Button
           variant="contained"
@@ -394,7 +368,7 @@ function App() {
         display="flex"
         flexDirection="row"
         justifyContent="space-between"
-        ml={20}
+        ml={25}
       >
         <Box flex={1} display="flex" flexDirection="column" alignItems="start">
           {chart && (
@@ -439,109 +413,219 @@ function App() {
 
         {chart && (
           <Box
+            m={2}
             flex={1}
             display="flex"
-            flexDirection="row"
+            flexDirection="column"
             alignItems="start"
-            ml={20}
           >
-            <Box>
-              <h2>Conditions in {city}</h2>
-              <Box display="flex" flexDirection="row">
-                <div
-                  className="toggle-radio"
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    marginRight: "10px",
-                  }}
-                >
-                  <img
-                    src={backpack}
-                    alt="backpack"
-                    style={{ width: 50, height: 50 }}
-                  />
-                  <div style={{ marginTop: 10 }}>
-                    <div className="switch">
-                      <input
-                        type="radio"
-                        name="rdo2"
-                        id="minus1"
-                        checked={!isAnotherListVisible}
-                      />
-                      <label
-                        htmlFor="minus1"
-                        onClick={() => handleToggleAnotherList(false)}
-                      >
-                        -
-                      </label>
-                      <input
-                        type="radio"
-                        name="rdo2"
-                        id="plus2"
-                        checked={isAnotherListVisible}
-                      />
-                      <label
-                        htmlFor="plus2"
-                        onClick={() => handleToggleAnotherList(true)}
-                      >
-                        +
-                      </label>
-                    </div>
+            <h2>Packing Recommendation</h2>
+            <Box display="flex" flexDirection="row">
+              <div
+                className="toggle-radio"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  marginRight: "10px",
+                }}
+              >
+                <img
+                  src={backpack}
+                  alt="backpack"
+                  style={{ width: 50, height: 50 }}
+                />
+                <div style={{ marginTop: 10 }}>
+                  <div className="switch">
+                    <input
+                      type="radio"
+                      name="rdo2"
+                      id="minus1"
+                      checked={!isPackingListVisible}
+                    />
+                    <label
+                      htmlFor="minus1"
+                      onClick={() => handleTogglePackingList(false)}
+                    >
+                      -
+                    </label>
+                    <input
+                      type="radio"
+                      name="rdo2"
+                      id="plus2"
+                      checked={isPackingListVisible}
+                    />
+                    <label
+                      htmlFor="plus2"
+                      onClick={() => handleTogglePackingList(true)}
+                    >
+                      +
+                    </label>
                   </div>
                 </div>
-                <div
-                  className="toggle-radio"
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    marginRight: "10px",
-                  }}
-                >
-                  <img
-                    src={backpack}
-                    alt="backpack"
-                    style={{ width: 50, height: 50 }}
-                  />
-                  <div style={{ marginTop: 10 }}>
-                    <div className="switch">
-                      <input
-                        type="radio"
-                        name="rdo1"
-                        id="minus1"
-                        checked={!isPackingListVisible}
-                      />
-                      <label
-                        htmlFor="minus1"
-                        onClick={() => handleTogglePackingList(false)}
-                      >
-                        -
-                      </label>
-                      <input
-                        type="radio"
-                        name="rdo1"
-                        id="plus1"
-                        checked={isPackingListVisible}
-                      />
-                      <label
-                        htmlFor="plus1"
-                        onClick={() => handleTogglePackingList(true)}
-                      >
-                        +
-                      </label>
-                    </div>
+              </div>
+              <div
+                className="toggle-radio"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  marginRight: "10px",
+                }}
+              >
+                <img
+                  src={toiletries}
+                  alt="toiletries"
+                  style={{ width: 50, height: 50 }}
+                />
+                <div style={{ marginTop: 10 }}>
+                  <div className="switch">
+                    <input
+                      type="radio"
+                      name="rdo1"
+                      id="minus1"
+                      checked={!isToiletriesListVisible}
+                    />
+                    <label
+                      htmlFor="minus1"
+                      onClick={() => handleToggleToiletriesList(false)}
+                    >
+                      -
+                    </label>
+                    <input
+                      type="radio"
+                      name="rdo1"
+                      id="plus1"
+                      checked={isToiletriesListVisible}
+                    />
+                    <label
+                      htmlFor="plus1"
+                      onClick={() => handleToggleToiletriesList(true)}
+                    >
+                      +
+                    </label>
                   </div>
                 </div>
-              </Box>
-              {isPackingListVisible &&
-                packingList &&
-                renderList(packingList, selectedItems, setSelectedItems)}
-              {isAnotherListVisible &&
-                anotherList &&
-                renderList(anotherList, selectedItems, setSelectedItems)}
+              </div>
+              <div
+                className="toggle-radio"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  marginRight: "10px",
+                }}
+              >
+                <img
+                  src={shirt}
+                  alt="clothes"
+                  style={{ width: 60, height: 50 }}
+                />
+                <div style={{ marginTop: 10 }}>
+                  <div className="switch">
+                    <input
+                      type="radio"
+                      name="rdo3"
+                      id="minus1"
+                      checked={!isClothesListVisible}
+                    />
+                    <label
+                      htmlFor="minus1"
+                      onClick={() => handleToggleClothesList(false)}
+                    >
+                      -
+                    </label>
+                    <input
+                      type="radio"
+                      name="rdo3"
+                      id="plus1"
+                      checked={isClothesListVisible}
+                    />
+                    <label
+                      htmlFor="plus1"
+                      onClick={() => handleToggleClothesList(true)}
+                    >
+                      +
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="toggle-radio"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  marginRight: "10px",
+                }}
+              >
+                <img
+                  src={electronics}
+                  alt="electronics"
+                  style={{ width: 50, height: 50 }}
+                />
+                <div style={{ marginTop: 10 }}>
+                  <div className="switch">
+                    <input
+                      type="radio"
+                      name="rdo4"
+                      id="minus1"
+                      checked={!isElectronicsListVisible}
+                    />
+                    <label
+                      htmlFor="minus1"
+                      onClick={() => handleToggleElectronicsList(false)}
+                    >
+                      -
+                    </label>
+                    <input
+                      type="radio"
+                      name="rdo4"
+                      id="plus1"
+                      checked={isElectronicsListVisible}
+                    />
+                    <label
+                      htmlFor="plus1"
+                      onClick={() => handleToggleElectronicsList(true)}
+                    >
+                      +
+                    </label>
+                  </div>
+                </div>
+              </div>
             </Box>
+            {isPackingListVisible &&
+              packingList &&
+              renderList(
+                packingList,
+                selectedItems,
+                setSelectedItems,
+                "Essentials List"
+              )}
+            {isToiletriesListVisible &&
+              toiletriesList &&
+              renderList(
+                toiletriesList,
+                selectedItems,
+                setSelectedItems,
+                "Toiletries List"
+              )}
+                          {isClothesListVisible &&
+              clothesList &&
+              renderList(
+                clothesList,
+                selectedItems,
+                setSelectedItems,
+                "Clothes List"
+              )}
+                          {isElectronicsListVisible &&
+              electronicsList &&
+              renderList(
+                electronicsList,
+                selectedItems,
+                setSelectedItems,
+                "Electronics List"
+              )}
           </Box>
         )}
       </Box>
