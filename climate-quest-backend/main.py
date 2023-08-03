@@ -62,7 +62,7 @@ async def prepare_quest(request: ChartRequest):
             },
             "packing_list": {
                   "clothes": packing_recommendations.clothing_items,
-                  "general_items": packing_recommendations.general_items
+                  "general_items": packing_recommendations.travel_type_items
                   }
         }
 
