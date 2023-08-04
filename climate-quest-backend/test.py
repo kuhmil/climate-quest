@@ -13,37 +13,59 @@ from models import ChartRequest, WeatherData
 from choropleth import get_choropleth
 from dotenv import load_dotenv
 import os
-
-load_dotenv()
-API_KEY = os.getenv('API_KEY')
+from models import PackingRecommendations, ChartRequest, WeatherData
 
 
-# app = FastAPI()
+# def get_clothing_recommendation(temperature, unit='metric'):
+    # with open('packing_list.json', 'r') as file:
+    #     data = json.load(file)
+#         categories = data['temperature']
+
+#     if unit not in ['metric', 'imperial']:
+#         raise ValueError('Unit must be either "metric" or "imperial"')
+
+#     # Convert the temperature to both Celsius and Fahrenheit
+#     if unit == 'metric':
+#         celsius_temperature = temperature
+#         fahrenheit_temperature = temperature * 9/5 + 32
+#     else:
+#         celsius_temperature = (temperature - 32) * 5/9
+#         fahrenheit_temperature = temperature
+        
+#     for category in categories:
+#         if category['range'][unit][0] <= temperature <= category['range'][unit][1]:
+#             return category['clothing'], celsius_temperature, fahrenheit_temperature
+
+#     return None, None, None
 
 
-# {'location': '43.65107,-79.347015', 'fields': ['temperature', 'humidity', 'windSpeed', 'totalPrecipitationAccumulation'], '
-# timesteps': ['1h'], 'startTime': '2022-08-01T23:10:27Z', 'endTime': '2022-08-02T23:10:27Z', 'units': 'metric'}
+# def get_humidity_recommendation(humidity_value):
+#     with open('packing_list.json', 'r') as file:
+#         data = json.load(file)
+#         humidity_data = data['humidity']
 
-url = f"https://api.tomorrow.io/v4/historical?apikey={API_KEY}"
+#     for entry in humidity_data:
+#         if entry['range'][0] <= humidity_value <= entry['range'][1]:
+#             return entry['clothing']
 
-# location = f"{request.latitude},{request.longitude}"
-# startDate, endDate = adjust_dates(request)
+#     return None
 
-payload = {
-    "location": '43.65107,-79.347015',
-    "fields": ["temperature", "humidity", "windSpeed", "totalPrecipitationAccumulation"],
-    "timesteps": ["1h"],
-    "startTime": '2022-08-01T23:10:27Z',
-    "endTime": '2022-08-02T23:10:27Z',
-    "units": 'metric'
-}
 
-headers = {
-    "accept": "application/json",
-    "content-type": "application/json"
-}
 
-response = requests.post(url, json=payload, headers=headers)
-data = response.json()
+def get_temperature_recommendation(data, temperature, unit='metric'):
+    temperature = float(temperature)  # Convert temperature to float
+    categories = data['temperature']
 
-print(data)
+    if unit not in ['metric', 'imperial']:
+        raise ValueError('Unit must be either "metric" or "imperial"')
+
+    for category in categories:
+        if category['range'][unit][0] <= temperature <= category['range'][unit][1]:
+            return category['clothing'], category['range']['metric'], category['range']['imperial']
+
+    return None, None, None
+
+with open('packing_list.json', 'r') as file:
+    data = json.load(file)
+
+print(get_temperature_recommendation(data, "45", "metric"))

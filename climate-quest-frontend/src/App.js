@@ -36,12 +36,14 @@ function App() {
     Object.keys(continentsCountries[continent])[0]
   );
   const [city, setCity] = useState("");
-  const [temperature, setTemperature] = useState(null);
+  const [temperatureC, setTemperatureC] = useState(null);
+  const [temperatureF, setTemperatureF] = useState(null);
   const [humidity, setHumidity] = useState(null);
   const [windSpeed, setWindSpeed] = useState(null);
   const [precipitationIntensity, setPrecipitationIntensity] = useState(null);
   const [activity, setActivity] = useState("");
   const [travelType, setTravelType] = useState("");
+  const [isCelsius, setIsCelsius] = useState(true);
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -113,6 +115,10 @@ function App() {
     }
   };
 
+  const toggleUnit = () => {
+    setIsCelsius(!isCelsius);
+  };
+
   const toggleChecklist = (checklistNumber) => {
     const checklist = document.getElementById(`checklist${checklistNumber}`);
     checklist.classList.toggle("show-card");
@@ -133,6 +139,8 @@ function App() {
   const handleToggleToiletriesList = (isVisible) => {
     setIsToiletriesListVisible(!isToiletriesListVisible);
   };
+
+
   const handleClick = async () => {
     try {
       const response = await axios.post("http://localhost:8000/quest", {
@@ -147,30 +155,33 @@ function App() {
         endDate,
         unit,
       });
-
+  
       if (response.status === 200) {
         setMessage("Button was clicked!");
-
+  
         // Parse the Plotly JSON
         const chartData = response.data.chart.data;
         const chartLayout = response.data.chart.layout;
+        const questData = response.data.weather;
+        const questItems = response.data.packing_list;
         setChart({ data: chartData, layout: chartLayout });
-
+  
         // Update the weather data from the backend response
-        setTemperature(response.data.weather.temperature);
-        setHumidity(response.data.weather.humidity);
+        setTemperatureC(questData.temperatureC);
+        setTemperatureF(response.data.weather.temperatureF);
+        setHumidity(questData.humidity);
         setWindSpeed(response.data.weather.windSpeed);
         // setPrecipitationIntensity(response.data.weather.precipitationIntensity);
-
-        // Update the clothing data from the backend response
-        setPackingList(response.data.packing_list.clothes);
-        setClothesList(response.data.packing_list.general_items);
-        setToiletriesList(response.data.packing_list.general_items);
-        setElectronicsList(response.data.packing_list.general_items);
-
+  
+        // Update the packing data from the backend response
+        setClothesList(questItems.clothes_items);
+        // setGeneralItemsList(response.data.packing_list.general_items); // you may need to define setGeneralItemsList
+        // setToiletriesList(response.data.packing_list.toiletries_items); // assuming you have other lists like this
+        // setElectronicsList(response.data.packing_list.electronics_items); // you may need to define these setters
+  
         // Check for missing data
         setMissingData(response.data.weather.missingData);
-
+  
         setCalendarOpen(false);
         // setShowSwitch(true);
       }
@@ -178,7 +189,7 @@ function App() {
       console.error(error);
     }
   };
-
+  
   const renderList = (list, selectedItems, setSelectedItems, title) => (
     <Box display="flex" flexDirection="column" alignItems="start">
       <h4>{title}</h4>
@@ -209,6 +220,7 @@ function App() {
       ))}
     </Box>
   );
+
 
   return (
     <Box m={5} textAlign="center">
@@ -373,17 +385,17 @@ function App() {
         <Box flex={1} display="flex" flexDirection="column" alignItems="start">
           {chart && (
             <Box mt={2}>
-              <h2>Conditions in {city}</h2>
+              <h2>Conditions in {temperatureC}</h2>
               {missingData ? (
                 <p>
                   There is currently not enough data available for this city.
                 </p>
               ) : (
                 <>
-                  {temperature && (
+                  {temperatureC && temperatureF && (
                     <p>
-                      Temperature: {temperature} °
-                      {unit === "metric" ? "C" : "F"}
+                      Temperature: {isCelsius ? temperatureC : temperatureF} °
+                      {isCelsius ? "C" : "F"}
                     </p>
                   )}
 
@@ -610,7 +622,7 @@ function App() {
                 setSelectedItems,
                 "Toiletries List"
               )}
-                          {isClothesListVisible &&
+            {isClothesListVisible &&
               clothesList &&
               renderList(
                 clothesList,
@@ -618,7 +630,7 @@ function App() {
                 setSelectedItems,
                 "Clothes List"
               )}
-                          {isElectronicsListVisible &&
+            {isElectronicsListVisible &&
               electronicsList &&
               renderList(
                 electronicsList,

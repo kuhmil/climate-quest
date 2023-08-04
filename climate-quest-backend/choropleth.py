@@ -5,10 +5,10 @@ from models import ChartRequest
 from typing import Dict
 
 
-def get_choropleth(request: ChartRequest, temperature: float):
+def get_choropleth(request: ChartRequest, temperature: float, unit):
     iso_code = get_iso_code(request.country)
 
-    colorscale = get_colorscale(temperature)
+    colorscale = get_colorscale(temperature, unit)
 
     if iso_code:
     #     temperature_bar = go.Bar(
@@ -87,17 +87,13 @@ def get_choropleth(request: ChartRequest, temperature: float):
     else:
         print(f"No ISO code found for {request.country}.")
 
-def get_colorscale(number):
+def get_colorscale(number, unit):
     with open('packing_list.json') as file:
         data = json.load(file)
 
     for entry in data['temperature']:
-        if len(entry['range']) == 2:
-            if entry['range'][0] <= number <= entry['range'][1]:
-                return entry['colorscale']
-        else:
-            if entry['range'][0] == number:
+        if unit in entry['range']:
+            if entry['range'][unit][0] <= number <= entry['range'][unit][1]:
                 return entry['colorscale']
     
     return None
-

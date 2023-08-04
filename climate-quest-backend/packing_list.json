@@ -1,36 +1,37 @@
 {
   "temperature": [
     {
-      "condition": "cold",
-      "range": [-100.0, 10.0],
-      "clothing": ["Jacket", "Long Pants", "Boots", "Hat", "Gloves"],
-      "colorscale": "Blues"
+        "condition": "cold",
+        "range": {"metric": [-100.0, 10.0], "imperial": [-148.0, 50.0]},
+        "clothing": ["Jacket", "Long Pants", "Boots", "Hat", "Gloves"],
+        "colorscale": "Blues"
     },
     {
-      "condition": "mild",
-      "range": [10.0, 25.0],
-      "clothing": ["Sweater", "Jeans", "Sneakers", "Scarf"],
-      "colorscale": "Greens"
+        "condition": "mild",
+        "range": {"metric": [10.0, 25.0], "imperial": [50.0, 77.0]},
+        "clothing": ["Sweater", "Jeans", "Sneakers", "Scarf"],
+        "colorscale": "Greens"
     },
     {
-      "condition": "mild summer day",
-      "range": [25.0, 30.0],
-      "clothing": ["Light T-shirt", "Shorts", "Sandals", "Sunhat"],
-      "colorscale": "Oranges"
+        "condition": "mild summer day",
+        "range": {"metric": [25.0, 30.0], "imperial": [77.0, 86.0]},
+        "clothing": ["Light T-shirt", "Shorts", "Sandals", "Sunhat"],
+        "colorscale": "Oranges"
     },
     {
-      "condition": "hot summer day",
-      "range": [31.0, 35.0],
-      "clothing": ["Tank Top", "Shorts", "Flip-flops", "Sunglasses", "Sunhat"],
-      "colorscale": "Yellows"
+        "condition": "hot summer day",
+        "range": {"metric": [31.0, 35.0], "imperial": [87.8, 95.0]},
+        "clothing": ["Tank Top", "Shorts", "Flip-flops", "Sunglasses", "Sunhat"],
+        "colorscale": "Yellows"
     },
     {
-      "condition": "hot",
-      "range": [35.0, 100.0],
-      "clothing": ["Light Clothing", "Shorts", "Sandals", "Wide-brimmed Hat", "Sunglasses", "Sunscreen"],
-      "colorscale": "Reds"
+        "condition": "hot",
+        "range": {"metric": [35.0, 100.0], "imperial": [95.0, 212.0]},
+        "clothing": ["Light Clothing", "Shorts", "Sandals", "Wide-brimmed Hat", "Sunglasses", "Sunscreen"],
+        "colorscale": "Reds"
     }
-  ],
+],
+
   "humidity": [
     {
       "condition": "dry",
@@ -48,7 +49,7 @@
         30,
         70
       ],
-      "clothing": []
+      "clothing": ["testing_humid_clothes"]
     },
     {
       "condition": "humid",
