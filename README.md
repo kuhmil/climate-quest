@@ -124,8 +124,6 @@ The project also uses Docker Compose to orchestrate containers for both frontend
 - Backend Service: The backend service is set up to run from the climate-quest-backend directory, exposing port 8000. The Dockerfile within this directory is used for building the container.
 - Frontend Service: Similarly, the frontend service is built from the climate-quest-frontend directory, exposing port 3000.
 
-
-```
 ```bash
 # Navigate to the directory with your docker-compose.yml file
 cd climate-quest
