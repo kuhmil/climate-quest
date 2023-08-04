@@ -94,7 +94,6 @@ def get_weather_data(request: ChartRequest) -> WeatherData:
 
     response = requests.post(url, json=payload, headers=headers)
 
-
     if response.status_code == 200:
         try:
             data = response.json()
