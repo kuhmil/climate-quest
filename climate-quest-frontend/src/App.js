@@ -378,54 +378,59 @@ function App() {
         justifyContent="space-between"
         ml={25}
       >
-<Box flex={1} display="flex" flexDirection="column" alignItems="start">
-  {chart && (
-    <Box mt={2}>
-      <h2>Conditions in {city}</h2>
-      {!missingData && (
-        <p>
-          There is currently not enough data available for this city.
-        </p>
-      )}
-      {missingData && (
-        <>
-          {console.log(
-            "temperatureC:",
-            temperatureC,
-            "temperatureF:",
-            temperatureF,
-            "isCelsius:",
-            isCelsius
+        <Box flex={1} display="flex" flexDirection="column" alignItems="start">
+          {chart && (
+            <Box mt={2}>
+              <h2>Conditions in {city}</h2>
+              {!missingData && temperatureC == null && (
+                <p>
+                  There is currently not enough data available for this city.
+                </p>
+              )}
+              {!missingData && (
+                <>
+                  {console.log(
+                    "temperatureC:",
+                    temperatureC,
+                    "temperatureF:",
+                    temperatureF,
+                    "isCelsius:",
+                    isCelsius
+                  )}
+                  {temperatureC != null && temperatureF != null && (
+                    <p>
+                      Temperature:{" "}
+                      {unit === "metric"
+                        ? temperatureC + "°C"
+                        : temperatureF + "°F"}
+                    </p>
+                  )}
+                  {humidity && <p>Humidity: {humidity} %</p>}
+                  {windSpeed != null && (
+                    <p>
+                      Wind Speed:{" "}
+                      {unit === "metric"
+                        ? windSpeed + " m/s"
+                        : windSpeed + " mph"}
+                    </p>
+                  )}
+                  {precipitationIntensity && (
+                    <p>
+                      Precipitation Intensity: {precipitationIntensity} mm/hr
+                    </p>
+                  )}
+                </>
+              )}
+              <Plot
+                data={chart.data}
+                layout={chart.layout}
+                config={{ displayModeBar: false }}
+                useResizeHandler
+                style={{ width: "800px", height: "0px" }}
+              />
+            </Box>
           )}
-          {temperatureC != null && temperatureF != null && (
-            <p>
-              Temperature:{" "}
-              {unit === "metric" ? temperatureC + "°C" : temperatureF + "°F"}
-            </p>
-          )}
-
-          {humidity && <p>Humidity: {humidity} %</p>}
-
-          {windSpeed && <p>Wind Speed: {windSpeed} m/s</p>}
-
-          {precipitationIntensity && (
-            <p>
-              Precipitation Intensity: {precipitationIntensity} mm/hr
-            </p>
-          )}
-        </>
-      )}
-      <Plot
-        data={chart.data}
-        layout={chart.layout}
-        config={{ displayModeBar: false }}
-        useResizeHandler
-        style={{ width: "800px", height: "0px" }}
-      />
-    </Box>
-  )}
-</Box>
-
+        </Box>
 
         {chart && (
           <Box
