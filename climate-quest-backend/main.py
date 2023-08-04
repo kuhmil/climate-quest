@@ -34,7 +34,7 @@ async def prepare_quest(request: ChartRequest):
         data = get_weather_data(request)
         
         if data.missingData is True:
-            chart_data_serializable = get_choropleth(request, data.averageTemperature)
+            chart_data_serializable = get_choropleth(request, data.averageTemperature, request.unit)
             return {
                 "chart": chart_data_serializable,
                 "weather": {
@@ -45,25 +45,30 @@ async def prepare_quest(request: ChartRequest):
                 },
                 "packing_list": None
             }
+        
+        chart_data_serializable = get_choropleth(request, data.averageTemperature, request.unit)
 
-        chart_data_serializable = get_choropleth(request, data.averageTemperature)
+        packing_recommendations = get_packing_list(data, request.activity, request.travelType, request.unit)
 
-        packing_recommendations = get_packing_list(data, request.activity, request.travelType)
-
-        print(packing_recommendations)
+        print(packing_recommendations.clothing_items)
 
         return {
             "chart": chart_data_serializable,
             "weather": {
-                "temperature": data.averageTemperature,
+                "temperatureC": data.averageTemperature,
+                "temperatureF": data.averageTemperature,
                 "humidity": data.averageHumidity,
                 "windSpeed": data.averageWindSpeed,
                 "missingData": False
             },
-            "packing_list": packing_recommendations  # return the loaded clothing data as part of the response
+            "packing_list": {
+                    "packing_items":  packing_recommendations.packing_items,
+                    "toiletry_items":  packing_recommendations.toiletry_items,
+                    "clothing_items":  packing_recommendations.clothing_items,
+                    "electronic_items":  packing_recommendations.electronic_items
+                  }
         }
 
-    
 
 def get_weather_data(request: ChartRequest) -> WeatherData:
 
@@ -72,15 +77,15 @@ def get_weather_data(request: ChartRequest) -> WeatherData:
     location = f"{request.latitude},{request.longitude}"
     startDate, endDate = adjust_dates(request)
 
+    
     payload = {
         "location": location,
-        "fields": ["temperature", "humidity", "windSpeed", "precipitationIntensity"],
+        "fields": ["temperature", "humidity", "windSpeed", "totalPrecipitationAccumulation"],
         "timesteps": ["1h"],
         "startTime": startDate,
         "endTime": endDate,
         "units": request.unit
     }
-
 
     headers = {
         "accept": "application/json",
@@ -89,9 +94,12 @@ def get_weather_data(request: ChartRequest) -> WeatherData:
 
     response = requests.post(url, json=payload, headers=headers)
 
+
     if response.status_code == 200:
         try:
             data = response.json()
+
+
 
             # Extract temperature, humidity, and windSpeed data from the API response
             temperature = [item['values']['temperature'] for item in data["data"]["timelines"][0]["intervals"]]
@@ -102,6 +110,8 @@ def get_weather_data(request: ChartRequest) -> WeatherData:
             avg_temperature = round(statistics.mean(temperature), 2)
             avg_humidity = round(statistics.mean(humidity), 2)
             avg_wind_speed = round(statistics.mean(windSpeed), 2)
+
+            print(avg_temperature, avg_humidity,avg_wind_speed )
 
             # Return the WeatherData object with the calculated averages and missingData set to False
             return WeatherData(

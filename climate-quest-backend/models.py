@@ -23,6 +23,9 @@ class WeatherData(BaseModel):
 
 
 class PackingRecommendations(BaseModel):
-    clothing_items: List[str]
-    general_items: List[str]
-    travel_type_items: List[str]
+    # temperatureC: List[str]
+    # temperatureF: List[str]
+    toiletry_items: List[str]
+    clothing_items: List[str] = []
+    packing_items: List[str] = []
+    electronic_items: List[str] = []

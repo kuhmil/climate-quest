@@ -19,3 +19,4 @@ tenacity==8.2.2
 typing-extensions==4.7.1
 urllib3==2.0.4
 uvicorn==0.23.1
+python-dotenv==1.0.0 

@@ -2,44 +2,137 @@
   "temperature": [
     {
       "condition": "cold",
-      "range": [-100.0, 10.0],
-      "clothing": ["Jacket", "Long Pants", "Boots", "Hat", "Gloves"],
+      "range": {
+        "metric": [
+          -100.0,
+          10.0
+        ],
+        "imperial": [
+          -148.0,
+          50.0
+        ]
+      },
+      "clothing": [
+        "Jacket",
+        "Long Pants",
+        "Boots",
+        "Hat",
+        "Gloves"
+      ],
       "colorscale": "Blues"
     },
     {
       "condition": "mild",
-      "range": [10.0, 25.0],
-      "clothing": ["Sweater", "Jeans", "Sneakers", "Scarf"],
+      "range": {
+        "metric": [
+          10.0,
+          25.0
+        ],
+        "imperial": [
+          50.0,
+          77.0
+        ]
+      },
+      "clothing": [
+        "Sweater",
+        "Jeans",
+        "Sneakers",
+        "Scarf"
+      ],
       "colorscale": "Greens"
     },
     {
       "condition": "mild summer day",
-      "range": [25.0, 30.0],
-      "clothing": ["Light T-shirt", "Shorts", "Sandals", "Sunhat"],
+      "range": {
+        "metric": [
+          25.0,
+          30.0
+        ],
+        "imperial": [
+          77.0,
+          86.0
+        ]
+      },
+      "clothing": [
+        "Light T-shirt",
+        "Shorts",
+        "Sandals",
+        "Sunhat"
+      ],
       "colorscale": "Oranges"
     },
     {
       "condition": "hot summer day",
-      "range": [31.0, 35.0],
-      "clothing": ["Tank Top", "Shorts", "Flip-flops", "Sunglasses", "Sunhat"],
+      "range": {
+        "metric": [
+          31.0,
+          35.0
+        ],
+        "imperial": [
+          87.8,
+          95.0
+        ]
+      },
+      "clothing": [
+        "Tank Top",
+        "Shorts",
+        "Flip-flops",
+        "Sunglasses",
+        "Sunhat"
+      ],
       "colorscale": "Yellows"
     },
     {
       "condition": "hot",
-      "range": [35.0, 100.0],
-      "clothing": ["Light Clothing", "Shorts", "Sandals", "Wide-brimmed Hat", "Sunglasses", "Sunscreen"],
+      "range": {
+        "metric": [
+          35.0,
+          100.0
+        ],
+        "imperial": [
+          95.0,
+          212.0
+        ]
+      },
+      "clothing": [
+        "Light Clothing",
+        "Shorts",
+        "Sandals",
+        "Wide-brimmed Hat",
+        "Sunglasses",
+        "Sunscreen"
+      ],
       "colorscale": "Reds"
     }
   ],
   "humidity": [
     {
-      "condition": "dry",
+      "condition": "very dry",
       "range": [
         0,
-        30
+        15
+      ],
+      "items": [
+        "Lip balm",
+        "Heavy moisturizer"
       ],
       "clothing": [
+        "Moisture-wicking fabric",
+        "Layered clothing"
+      ]
+    },
+    {
+      "condition": "dry",
+      "range": [
+        15,
+        30
+      ],
+      "items": [
         "Moisturizer"
+      ],
+      "clothing": [
+        "Lightweight fabric",
+        "Comfortable fit"
       ]
     },
     {
@@ -48,19 +141,31 @@
         30,
         70
       ],
-      "clothing": []
+      "items": [
+        "Light moisturizer"
+      ],
+      "clothing": [
+        "Breathable fabric",
+        "Casual wear"
+      ]
     },
     {
       "condition": "humid",
       "range": [
         70,
-        100
+        90
+      ],
+      "items": [
+        "Dehumidifier",
+        "Refreshing facial mist"
       ],
       "clothing": [
-        "Dehumidifier"
+        "Loose clothing",
+        "Cooling fabrics"
       ]
     }
   ],
+  
   "windSpeed": [
     {
       "condition": "calm",
@@ -68,7 +173,14 @@
         0,
         5
       ],
-      "clothing": []
+      "clothing": [
+        "Light Jacket",
+        "Sun Hat"
+      ],
+      "items": [
+        "Sunscreen",
+        "Water Bottle"
+      ]
     },
     {
       "condition": "breezy",
@@ -78,18 +190,62 @@
       ],
       "clothing": [
         "Windbreaker",
-        "Hat"
+        "Hat",
+        "Sunglasses"
+      ],
+      "items": [
+        "Lip Balm",
+        "Hand Sanitizer"
       ]
     },
     {
       "condition": "windy",
       "range": [
         10,
-        100
+        25
       ],
       "clothing": [
         "Heavy Jacket",
-        "Scarf"
+        "Scarf",
+        "Gloves"
+      ],
+      "items": [
+        "Face Mask",
+        "Tissue"
+      ]
+    },
+    {
+      "condition": "very windy",
+      "range": [
+        25,
+        50
+      ],
+      "clothing": [
+        "Heavy Jacket",
+        "Scarf",
+        "Gloves",
+        "Windproof Pants"
+      ],
+      "items": [
+        "Emergency Kit",
+        "Weather Radio"
+      ]
+    },
+    {
+      "condition": "extreme",
+      "range": [
+        50,
+        100
+      ],
+      "clothing": [
+        "Extreme Weather Jacket",
+        "Windproof Pants",
+        "Thermal Gloves",
+        "Goggles"
+      ],
+      "items": [
+        "Emergency Contact Info",
+        "First Aid Kit"
       ]
     }
   ],
@@ -100,27 +256,69 @@
         0,
         0
       ],
-      "clothing": []
+      "clothing": [
+        "Sun Hat",
+        "Sunglasses"
+      ]
+    },
+    {
+      "condition": "mist",
+      "range": [
+        0,
+        0.1
+      ],
+      "clothing": [
+        "Light Jacket"
+      ]
     },
     {
       "condition": "light",
       "range": [
-        0,
+        0.1,
         1
       ],
       "clothing": [
+        "Umbrella",
+        "Water-Resistant Jacket"
+      ]
+    },
+    {
+      "condition": "moderate",
+      "range": [
+        1,
+        5
+      ],
+      "clothing": [
+        "Raincoat",
+        "Waterproof Boots",
         "Umbrella"
       ]
     },
     {
       "condition": "heavy",
       "range": [
-        1,
-        100
+        5,
+        25
       ],
       "clothing": [
         "Raincoat",
-        "Waterproof Boots"
+        "Waterproof Boots",
+        "Waterproof Pants",
+        "Water-Resistant Gloves"
+      ]
+    },
+    {
+      "condition": "extreme",
+      "range": [
+        25,
+        100
+      ],
+      "clothing": [
+        "Extreme Weather Jacket",
+        "Waterproof Boots",
+        "Waterproof Pants",
+        "Waterproof Gloves",
+        "Umbrella"
       ]
     }
   ],
@@ -133,7 +331,9 @@
         "Flashlight",
         "Cooking Utensils",
         "Campfire Starter",
-        "Camp Chairs"
+        "Camp Chairs",
+        "First Aid Kit",
+        "Bug Spray"
       ]
     },
     {
@@ -144,7 +344,9 @@
         "Beach Ball",
         "Snorkel",
         "Sunscreen",
-        "Beach Umbrella"
+        "Beach Umbrella",
+        "Flip Flops",
+        "Cooler"
       ]
     },
     {
@@ -155,7 +357,9 @@
         "Map",
         "Water Bottle",
         "Compass",
-        "Trail Mix"
+        "Trail Mix",
+        "Rain Cover",
+        "Emergency Whistle"
       ]
     },
     {
@@ -166,7 +370,9 @@
         "Camera",
         "Water Bottle",
         "Guidebook",
-        "Umbrella"
+        "Umbrella",
+        "Portable Charger",
+        "Travel Backpack"
       ]
     },
     {
@@ -177,7 +383,9 @@
         "Car Charger",
         "Pillow",
         "Music Playlist",
-        "Emergency Kit"
+        "Emergency Kit",
+        "Spare Tire",
+        "Vehicle Documents"
       ]
     },
     {
@@ -188,7 +396,9 @@
         "Goggles",
         "Helmet",
         "Base Layers",
-        "Hand/Toe Warmers"
+        "Hand/Toe Warmers",
+        "Lift Pass",
+        "Snow Gloves"
       ]
     },
     {
@@ -199,7 +409,9 @@
         "Evening Wear",
         "Sun Hat",
         "Motion Sickness Medication",
-        "Travel Adapter"
+        "Travel Adapter",
+        "Formal Attire",
+        "Passport"
       ]
     },
     {
@@ -210,7 +422,21 @@
         "Sun Hat",
         "Insect Repellent",
         "Safari Clothing",
-        "Field Guide"
+        "Field Guide",
+        "Travel Insurance",
+        "Vaccination Record"
+      ]
+    },
+    {
+      "activity": "fishing",
+      "items": [
+        "Fishing Rod",
+        "Bait",
+        "Fishing License",
+        "Tackle Box",
+        "Hat",
+        "Sunscreen",
+        "Life Vest"
       ]
     }
   ],
@@ -218,10 +444,16 @@
     {
       "type": "sightseeing",
       "items": [
-        "Camera",
         "Comfortable Shoes",
         "Guidebook",
-        "Water Bottle"
+        "Water Bottle",
+        "Sun Hat",
+        "Map",
+        "Snacks"
+      ],
+      "electronics": [
+        "Camera",
+        "Portable Charger"
       ]
     },
     {
@@ -230,7 +462,14 @@
         "Suit",
         "Tie",
         "Briefcase",
-        "Laptop"
+        "Business Cards",
+        "Notepad"
+      ],
+      "electronics": [
+        "Laptop",
+        "Charger",
+        "Smartphone",
+        "Tablet"
       ]
     },
     {
@@ -238,8 +477,15 @@
       "items": [
         "Adventure Gear",
         "Helmet",
+        "First Aid Kit",
+        "Compass",
+        "Multi-tool",
+        "Weather-appropriate Clothing"
+      ],
+      "electronics": [
         "GoPro",
-        "First Aid Kit"
+        "GPS Device",
+        "Walkie-Talkie"
       ]
     },
     {
@@ -248,16 +494,29 @@
         "Swimsuit",
         "Beach Hat",
         "Sunglasses",
-        "Travel Guide"
+        "Travel Guide",
+        "Relaxing Music Playlist",
+        "Books",
+        "Deck of Cards"
+      ],
+      "electronics": [
+        "Bluetooth Speaker",
+        "E-Reader"
       ]
     },
     {
       "type": "cultural",
       "items": [
         "Phrasebook",
-        "Camera",
         "Comfortable Walking Shoes",
-        "Respectful Clothing"
+        "Respectful Clothing",
+        "Cultural Etiquette Guide",
+        "Gifts for Hosts"
+      ],
+      "electronics": [
+        "Camera",
+        "Smartphone",
+        "Portable Translator"
       ]
     },
     {
@@ -266,7 +525,12 @@
         "Reusable Water Bottle",
         "Binoculars",
         "Insect Repellent",
-        "Environmentally-friendly Toiletries"
+        "Environmentally-friendly Toiletries",
+        "Sustainable Travel Guide"
+      ],
+      "electronics": [
+        "Solar Charger",
+        "Camera"
       ]
     },
     {
@@ -275,7 +539,14 @@
         "Backpack",
         "Travel Adapter",
         "Money Belt",
-        "Quick-drying Towel"
+        "Quick-drying Towel",
+        "Hostel Guide",
+        "Sleeping Bag",
+        "Padlock"
+      ],
+      "electronics": [
+        "Smartphone",
+        "Power Bank"
       ]
     },
     {
@@ -284,7 +555,12 @@
         "Notebook",
         "Pen",
         "Reading Material",
-        "Comfortable Shoes"
+        "Comfortable Shoes",
+        "Educational Program Agenda"
+      ],
+      "electronics": [
+        "Laptop/Tablet",
+        "Portable Charger"
       ]
     },
     {
@@ -293,7 +569,13 @@
         "Volunteer Project Supplies",
         "Work Gloves",
         "Community Engagement Materials",
-        "Open Mindset"
+        "Open Mindset",
+        "Local Language Phrasebook",
+        "Contact Information"
+      ],
+      "electronics": [
+        "Smartphone",
+        "Camera"
       ]
     },
     {
@@ -302,7 +584,13 @@
         "Medical Documents",
         "Prescriptions",
         "First Aid Kit",
-        "Travel Insurance"
+        "Travel Insurance",
+        "Emergency Contact Info",
+        "Special Dietary Requirements"
+      ],
+      "electronics": [
+        "Smartphone",
+        "Charger"
       ]
     },
     {
@@ -311,8 +599,40 @@
         "Safety Whistle",
         "Self-defense Device",
         "Local Maps",
-        "Self-confidence"
+        "Self-confidence",
+        "Emergency Contact List"
+      ],
+      "electronics": [
+        "Portable Charger",
+        "Smartphone",
+        "Camera"
       ]
     }
+  ],
+  "toiletries": [
+    "Toothbrush",
+    "Toothpaste",
+    "Floss",
+    "Deodorant",
+    "Shampoo",
+    "Conditioner",
+    "Body wash",
+    "Face wash",
+    "Razor",
+    "Shaving cream",
+    "Moisturizer",
+    "Sunscreen",
+    "Lip balm",
+    "Hairbrush or comb",
+    "Makeup (if applicable)",
+    "Makeup remover (if applicable)",
+    "Feminine hygiene products (if applicable)",
+    "Contact lens solution (if applicable)",
+    "Eyeglasses or contacts (if applicable)",
+    "Hand sanitizer",
+    "Tissues",
+    "First aid kit",
+    "Prescriptions (if applicable)",
+    "Vitamins or supplements (if applicable)"
   ]
 }
