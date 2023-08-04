@@ -46,12 +46,11 @@ async def prepare_quest(request: ChartRequest):
                 "packing_list": None
             }
         
-        # print(request.activity)
-
-
         chart_data_serializable = get_choropleth(request, data.averageTemperature, request.unit)
 
         packing_recommendations = get_packing_list(data, request.activity, request.travelType, request.unit)
+
+        print(packing_recommendations.clothing_items)
 
         return {
             "chart": chart_data_serializable,
@@ -63,8 +62,10 @@ async def prepare_quest(request: ChartRequest):
                 "missingData": False
             },
             "packing_list": {
-                  "clothes_items":  packing_recommendations.clothing_items
-                #   "general_items":  packing_recommendations.general_items
+                    "packing_items":  packing_recommendations.packing_items,
+                    "toiletry_items":  packing_recommendations.toiletry_items,
+                    "clothing_items":  packing_recommendations.clothing_items,
+                    "electronic_items":  packing_recommendations.electronic_items
                   }
         }
 

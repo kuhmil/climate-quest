@@ -109,12 +109,6 @@ function App() {
     setEndDate(end);
   };
 
-  const handleUnitChange = (event, newUnit) => {
-    if (newUnit !== null) {
-      setUnit(newUnit);
-    }
-  };
-
   const toggleUnit = () => {
     setIsCelsius(!isCelsius);
   };
@@ -140,6 +134,9 @@ function App() {
     setIsToiletriesListVisible(!isToiletriesListVisible);
   };
 
+  const handleUnitChange = (event, newUnit) => {
+    setUnit(newUnit);
+  };
 
   const handleClick = async () => {
     try {
@@ -155,33 +152,33 @@ function App() {
         endDate,
         unit,
       });
-  
+
       if (response.status === 200) {
         setMessage("Button was clicked!");
-  
+
         // Parse the Plotly JSON
         const chartData = response.data.chart.data;
         const chartLayout = response.data.chart.layout;
-        const questData = response.data.weather;
+        const weatherData = response.data.weather;
         const questItems = response.data.packing_list;
         setChart({ data: chartData, layout: chartLayout });
-  
+
         // Update the weather data from the backend response
-        setTemperatureC(questData.temperatureC);
-        setTemperatureF(response.data.weather.temperatureF);
-        setHumidity(questData.humidity);
-        setWindSpeed(response.data.weather.windSpeed);
+        setTemperatureC(weatherData.temperatureC);
+        setTemperatureF(weatherData.temperatureF);
+        setHumidity(weatherData.humidity);
+        setWindSpeed(weatherData.windSpeed);
         // setPrecipitationIntensity(response.data.weather.precipitationIntensity);
-  
+
         // Update the packing data from the backend response
-        setClothesList(questItems.clothes_items);
-        // setGeneralItemsList(response.data.packing_list.general_items); // you may need to define setGeneralItemsList
-        // setToiletriesList(response.data.packing_list.toiletries_items); // assuming you have other lists like this
-        // setElectronicsList(response.data.packing_list.electronics_items); // you may need to define these setters
-  
+        setClothesList(questItems.clothing_items);
+        setPackingList(questItems.packing_items); // you may need to define setGeneralItemsList
+        setToiletriesList(questItems.toiletry_items); // assuming you have other lists like this
+        setElectronicsList(questItems.electronic_items); // you may need to define these setters
+
         // Check for missing data
-        setMissingData(response.data.weather.missingData);
-  
+        setMissingData(questItems.missingData);
+
         setCalendarOpen(false);
         // setShowSwitch(true);
       }
@@ -189,7 +186,7 @@ function App() {
       console.error(error);
     }
   };
-  
+
   const renderList = (list, selectedItems, setSelectedItems, title) => (
     <Box display="flex" flexDirection="column" alignItems="start">
       <h4>{title}</h4>
@@ -220,7 +217,6 @@ function App() {
       ))}
     </Box>
   );
-
 
   return (
     <Box m={5} textAlign="center">
@@ -382,46 +378,54 @@ function App() {
         justifyContent="space-between"
         ml={25}
       >
-        <Box flex={1} display="flex" flexDirection="column" alignItems="start">
-          {chart && (
-            <Box mt={2}>
-              <h2>Conditions in {temperatureC}</h2>
-              {missingData ? (
-                <p>
-                  There is currently not enough data available for this city.
-                </p>
-              ) : (
-                <>
-                  {temperatureC && temperatureF && (
-                    <p>
-                      Temperature: {isCelsius ? temperatureC : temperatureF} °
-                      {isCelsius ? "C" : "F"}
-                    </p>
-                  )}
-
-                  {humidity && <p>Humidity: {humidity} %</p>}
-
-                  {windSpeed && <p>Wind Speed: {windSpeed} m/s</p>}
-
-                  {precipitationIntensity && (
-                    <p>
-                      Precipitation Intensity: {precipitationIntensity} mm/hr
-                    </p>
-                  )}
-                </>
-              )}
-              {
-                <Plot
-                  data={chart.data}
-                  layout={chart.layout}
-                  config={{ displayModeBar: false }}
-                  useResizeHandler
-                  style={{ width: "800px", height: "0px" }}
-                />
-              }
-            </Box>
+<Box flex={1} display="flex" flexDirection="column" alignItems="start">
+  {chart && (
+    <Box mt={2}>
+      <h2>Conditions in {city}</h2>
+      {!missingData && (
+        <p>
+          There is currently not enough data available for this city.
+        </p>
+      )}
+      {missingData && (
+        <>
+          {console.log(
+            "temperatureC:",
+            temperatureC,
+            "temperatureF:",
+            temperatureF,
+            "isCelsius:",
+            isCelsius
           )}
-        </Box>
+          {temperatureC != null && temperatureF != null && (
+            <p>
+              Temperature:{" "}
+              {unit === "metric" ? temperatureC + "°C" : temperatureF + "°F"}
+            </p>
+          )}
+
+          {humidity && <p>Humidity: {humidity} %</p>}
+
+          {windSpeed && <p>Wind Speed: {windSpeed} m/s</p>}
+
+          {precipitationIntensity && (
+            <p>
+              Precipitation Intensity: {precipitationIntensity} mm/hr
+            </p>
+          )}
+        </>
+      )}
+      <Plot
+        data={chart.data}
+        layout={chart.layout}
+        config={{ displayModeBar: false }}
+        useResizeHandler
+        style={{ width: "800px", height: "0px" }}
+      />
+    </Box>
+  )}
+</Box>
+
 
         {chart && (
           <Box

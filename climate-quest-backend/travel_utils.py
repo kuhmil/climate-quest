@@ -55,12 +55,11 @@ def get_temperature_recommendation(data, temperature, unit='metric'):
     return None, None, None
 
 def get_humidity_recommendation(data, humidity_value):
-
     humidity_data = data['humidity']
 
     for entry in humidity_data:
         if entry['range'][0] <= humidity_value <= entry['range'][1]:
-            return entry['clothing'], entry['range']
+            return entry['items'], entry['clothing']
 
     return None, None
 
@@ -69,8 +68,7 @@ def get_wind_speed_recommendation(data, wind_speed):
 
     for entry in wind_speed_data:
         if entry['range'][0] <= wind_speed <= entry['range'][1]:
-            return entry['clothing']
-
+            return entry['items'], entry['clothing']
     return None
 
 def get_precipitation_recommendation(data, precipitation_intensity):
@@ -96,34 +94,48 @@ def get_travel_types_recommendation(data, travel_type):
 
     for entry in travel_types_data:
         if entry['type'] == travel_type:
-            return entry['items']
+            return entry['items'], entry['electronics']
 
-    return None
+    return None, None
+
+def get_toiletries(data):
+    toiletries = data['toiletries']
+    toiletries = [item for item in toiletries if "(if applicable)" not in item]
+    
+    return toiletries
+
+def remove_duplicates(input_list):
+    return list(set(input_list))
 
 
 def get_packing_list(weatherData: WeatherData, activity, travelType, unit) -> PackingRecommendations:
-    # temperature = data.averageTemperature
-    # humidity = data.averageHumidity
-    # windSpeed = data.averageWindSpeed
-
-    print(weatherData)
-    print(activity)
-    print(travelType)
-
     with open('packing_list.json', 'r') as file:
         data = json.load(file)
 
+    temperature_clothing, metric, fahrenheit = get_temperature_recommendation(data, weatherData.averageTemperature, unit)
+    humidity_items, humidity_clothing = get_humidity_recommendation(data, weatherData.averageHumidity)
+    wind_speed_items, wind_speed_clothing = get_wind_speed_recommendation(data, weatherData.averageWindSpeed)
+    # precipitation_clothing = get_precipitation_recommendation(data, weatherData.precipitationIntensity)
+    activity_items = get_general_items_recommendation(data, activity)
+    travel_type_items, electronic_items = get_travel_types_recommendation(data, travelType)
+    toiletry_list = get_toiletries(data)
 
-    temperature_clothing, metric, farenheit  = get_temperature_recommendation(data, weatherData.averageTemperature, unit)
-    # wind_speed_clothing = get_wind_speed_recommendation(data, weatherData.)
-    # # precipitation_clothing = get_precipitation_recommendation(data, precipitation_intensity)
-    general_items = get_general_items_recommendation(data, activity)
-    travel_type_items = get_travel_types_recommendation(data, travelType)
+    humidity_items = humidity_items or []
+    activity_items = activity_items or []
+    travel_type_items = travel_type_items or []
+    wind_speed_items = wind_speed_items or []
+    electronic_items = electronic_items or []
+
+
+    clothing_list = temperature_clothing + humidity_clothing + wind_speed_clothing
+    general_list = humidity_items + activity_items + travel_type_items + wind_speed_items
+    general_list = remove_duplicates(general_list)
 
 
 
     return PackingRecommendations(
-        clothing_items=temperature_clothing,
-        general_items=general_items
-        # travel_items=["camille"]
+        packing_items=general_list,
+        toiletry_items=toiletry_list,
+        clothing_items=clothing_list,
+        electronic_items=electronic_items
     )
